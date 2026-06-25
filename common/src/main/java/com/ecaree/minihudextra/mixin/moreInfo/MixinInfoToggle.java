@@ -52,6 +52,7 @@ public abstract class MixinInfoToggle {
     )
     private static void minihudextra$addCustomInfo(CallbackInfo ci) {
         List<InfoToggle> infos = new ArrayList<>(Arrays.asList($VALUES));
+        InfoToggle last = infos.get(infos.size() - 1);
 
         int ordinal = infos.get(infos.size() - 1).ordinal() + 1;
 
@@ -70,6 +71,7 @@ public abstract class MixinInfoToggle {
                     info.getName(),
                     info.getPrettyName()
             ));
+            i++;
         }
 
         $VALUES = infos.toArray(new InfoToggle[0]);
