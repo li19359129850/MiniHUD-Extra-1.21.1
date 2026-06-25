@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.ecaree.minihudextra.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "minihudI18n.MixinRenderHandler"
+  ],
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

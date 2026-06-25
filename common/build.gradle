@@ -1,0 +1,37 @@
+architectury {
+    common(enabled_platforms.split(","))
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/minihudextra.accesswidener")
+}
+
+dependencies {
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modApi "dev.architectury:architectury:${architectury_version}"
+
+    modCompileOnly 'curse.maven:malilib-303119:7763655' // fabric-1.21.1-0.21.0
+    modCompileOnly 'curse.maven:minihud-244260:5647790' // fabric-1.21.1-0.32.50
+    modCompileOnly 'curse.maven:ftb-library-fabric-438495:8226922' // fabric-2101.1.32
+    modCompileOnly 'curse.maven:ftb-ultimine-fabric-448231:8231401' // fabric-2101.1.15
+    modApi 'maven.modrinth:modmenu:11.0.4'
+    modCompileOnly 'curse.maven:glitchcore-955399:7720796' // Fabric 1.21.1-2.1.0.2
+    modCompileOnly 'curse.maven:serene-seasons-291874:6682334' //  Fabric 1.21.1-10.1.0.3
+
+    // glitchcore
+    runtimeOnly("com.electronwill.night-config:toml:3.6.7")
+    runtimeOnly("com.electronwill.night-config:core:3.6.7")
+    runtimeOnly("net.jodah:typetools:0.6.3")
+}
+
+publishing {
+    publications {
+        mavenCommon(MavenPublication) {
+            artifactId = archives_base_name
+            from components.java
+        }
+    }
+
+    repositories {
+    }
+}

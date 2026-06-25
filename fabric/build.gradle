@@ -1,0 +1,87 @@
+plugins {
+    id "com.github.johnrengelman.shadow"
+}
+
+architectury {
+    platformSetupLoomIde()
+    fabric()
+}
+
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+}
+
+configurations {
+    common
+    shadowCommon // Don't use shadow from the shadow plugin since it *excludes* files.
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentFabric.extendsFrom common
+}
+
+dependencies {
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+    modApi "dev.architectury:architectury-fabric:${architectury_version}"
+
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+
+    modCompileOnly 'curse.maven:malilib-303119:5647783' // fabric-1.21.1-0.21.0
+    modCompileOnly 'curse.maven:minihud-244260:5647790' // fabric-1.21.1-0.32.50
+    modCompileOnly 'curse.maven:ftb-library-fabric-438495:8226922' // fabric-2101.1.32
+    modCompileOnly 'curse.maven:ftb-ultimine-fabric-448231:8231401' // fabric-2101.1.15
+    modApi 'maven.modrinth:modmenu:11.0.4'
+    modCompileOnly 'curse.maven:glitchcore-955399:8109791' // Fabric 1.21.1-2.1.0.2
+    modCompileOnly 'curse.maven:serene-seasons-291874:6182595' //  Fabric 1.21.1-10.1.0.3
+
+    // glitchcore
+    runtimeOnly("com.electronwill.night-config:toml:3.6.7")
+    runtimeOnly("com.electronwill.night-config:core:3.6.7")
+    runtimeOnly("net.jodah:typetools:0.6.3")
+}
+
+processResources {
+    inputs.property "version", project.version
+}
+
+shadowJar {
+    exclude "architectury.common.json"
+
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier = "dev-shadow"
+}
+
+remapJar {
+    injectAccessWidener = true
+    input.set shadowJar.archiveFile
+    dependsOn shadowJar
+}
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}
+
+publishing {
+    publications {
+        mavenFabric(MavenPublication) {
+            artifactId = archives_base_name + "-" + project.name
+            from components.java
+        }
+    }
+
+    repositories {
+    }
+}
+
+jar {
+    archiveClassifier.set("dev")
+}

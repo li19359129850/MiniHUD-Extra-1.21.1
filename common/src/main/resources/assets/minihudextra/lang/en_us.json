@@ -1,0 +1,25 @@
+{
+  "minihudextra.gui.title.configs": "MiniHUD Extra Configs",
+  "minihudextra.gui.button.config_gui.generic": "Generic",
+  "minihudextra.gui.button.config_gui.colors": "Colors",
+  "minihudextra.gui.button.config_gui.vanilla": "Vanilla",
+  "minihudextra.gui.button.config_gui.mod_integration": "Mod Integration",
+  "minihudextra.hotkeys.category.generic_hotkeys": "Generic hotkeys",
+
+  "desc.minihudextra.orb_tier_1": "Weak",
+  "desc.minihudextra.orb_tier_2": "Apprentice",
+  "desc.minihudextra.orb_tier_3": "Magician",
+  "desc.minihudextra.orb_tier_4": "Master",
+  "desc.minihudextra.orb_tier_5": "Archmage",
+  "desc.minihudextra.moon_phase_1": "Full moon",
+  "desc.minihudextra.moon_phase_2": "Waning gibbous",
+  "desc.minihudextra.moon_phase_3": "Last quarter",
+  "desc.minihudextra.moon_phase_4": "Waning crescent",
+  "desc.minihudextra.moon_phase_5": "New moon",
+  "desc.minihudextra.moon_phase_6": "Waxing crescent",
+  "desc.minihudextra.moon_phase_7": "First quarter",
+  "desc.minihudextra.moon_phase_8": "Waxing gibbous",
+  "desc.minihudextra.weather_t": "Thunder",
+  "desc.minihudextra.weather_r": "Rain",
+  "desc.minihudextra.weather_c": "Clear"
+}

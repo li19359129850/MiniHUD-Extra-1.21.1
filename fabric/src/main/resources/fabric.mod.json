@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${project.version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_authors}"
+  ],
+  "contact": {
+    "sources": "${mod_repo}",
+    "issues": "${mod_repo}/issues"
+  },
+  "license": "${mod_license}",
+  "icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "com.ecaree.minihudextra.fabric.MiniHUDExtraFabric"
+    ],
+    "modmenu": [
+      "com.ecaree.minihudextra.config.ModMenuImpl"
+    ]
+  },
+  "mixins": [
+    "minihudextra.fabric.mixins.json",
+    "minihudextra-common.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": "~1.21.1",
+    "architectury": ">=${architectury_dependency}",
+    "minihud": ">=${minihud_dependency}",
+    "malilib": ">=${malilib_dependency}"
+  },
+  "suggests": {
+    "modmenu": "*",
+    "ftbultimine": "*",
+    "sereneseasons": "*"
+  }
+}
