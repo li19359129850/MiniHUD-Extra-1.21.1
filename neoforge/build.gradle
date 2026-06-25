@@ -35,8 +35,8 @@ dependencies {
 //    modApi 'curse.maven:mekanism-generators-268566:5316229' // 1.20.4-10.5.20.41
     modCompileOnly 'curse.maven:glitchcore-955399:8109792' // NeoForge 1.21.1-2.1.0.2
     modCompileOnly 'curse.maven:serene-seasons-291874:6182596' // NeoForge 1.21.1-10.1.0.3
-    modCompileOnly 'curse.maven:natures-aura-306626:6948833' // 40.1 // 映射还是有问题
-//    modApi files('libs/NaturesAura-40.2-api.jar')
+//    modCompileOnly 'curse.maven:natures-aura-306626:5220071' // 40.1 // 映射还是有问题
+    modApi files('libs/NaturesAura-41.9-api.jar')
 }
 
 shadowJar {
