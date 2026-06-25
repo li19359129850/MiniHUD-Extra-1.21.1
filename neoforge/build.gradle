@@ -26,8 +26,8 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
 
-    modApi 'maven.modrinth:mafglib:0.4.3+mc1.21.1' // neoforge-0.4.3+mc1.21.1
-    modApi 'maven.modrinth:bocchud:0.4.1+mc1.21.1' // neoforge-0.4.1+mc1.21.1
+    modApi 'maven.modrinth:mafglib:0.4.3+mc1.21.1'
+    modApi 'maven.modrinth:bocchud:0.4.1+mc1.21.1'
     modCompileOnly 'curse.maven:ftb-library-forge-404465:8226923' // neoforge-2101.1.32
     modCompileOnly 'curse.maven:ftb-ultimine-forge-386134:8231400' // neoforge-2101.1.15
     modImplementation files("libs/ForgedNetworking-0.1.1+mc1.21.1.jar")
@@ -35,7 +35,7 @@ dependencies {
 //    modApi 'curse.maven:mekanism-generators-268566:5316229' // 1.20.4-10.5.20.41
     modCompileOnly 'curse.maven:glitchcore-955399:8109792' // NeoForge 1.21.1-2.1.0.2
     modCompileOnly 'curse.maven:serene-seasons-291874:6182596' // NeoForge 1.21.1-10.1.0.3
-//    modCompileOnly 'curse.maven:natures-aura-306626:5220071' // 40.1 // 映射还是有问题
+    modCompileOnly 'curse.maven:natures-aura-306626:5220071' // 40.1 // 映射还是有问题
     modApi files('libs/NaturesAura-41.9-api.jar')
 }
 
