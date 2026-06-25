@@ -1,6 +1,5 @@
 package com.ecaree.minihudextra.util;
 
-import dev.architectury.event.EventResult;
 import dev.ftb.mods.ftbultimine.client.FTBUltimineClient;
 import fi.dy.masa.minihud.config.Configs;
 import net.minecraft.client.MinecraftClient;
@@ -8,7 +7,7 @@ import net.minecraft.client.MinecraftClient;
 public class UltimineMiniHUDHandler {
     private static boolean wasEnabledInitially = false;
 
-    public static void clientTick(Minecraft client) {
+    public static void clientTick(MinecraftClient client) {
         if (!com.ecaree.minihudextra.config.Configs.Generic.FTB_ULTIMINE_SUPPORT.getBooleanValue()) {
             restoreMiniHudIfNeeded();
             return;
