@@ -18,70 +18,70 @@ config="minihudextra-common.mixins.json"
 [[mixins]]
 config="minihudextra.neoforge.mixins.json"
 
-[[dependencies.minihudextra]]
+[[dependencies.${mod_id}]]
 modId="neoforge"
 type="required"
 versionRange="${neoforge_version_range}"
 ordering="NONE"
 side="CLIENT"
 
-[[dependencies.minihudextra]]
+[[dependencies.${mod_id}]]
 modId="minecraft"
 type="required"
 versionRange="[1.21.1,)"
 ordering="NONE"
 side="CLIENT"
 
-[[dependencies.minihudextra]]
+[[dependencies.${mod_id}]]
 modId="architectury"
 type="required"
 versionRange="[${architectury_dependency},)"
 ordering="AFTER"
 side="CLIENT"
 
-[[dependencies.minihudextra]]
+[[dependencies.${mod_id}]]
 modId="bocchud"
 type="required"
 versionRange="[${bocchud_dependency},)"
 ordering="NONE"
 side="CLIENT"
 
-[[dependencies.minihudextra]]
+[[dependencies.${mod_id}]]
 modId = "mafglib"
 type = "required"
 versionRange = "[${mafglib_dependency},)"
 ordering = "AFTER"
 side = "CLIENT"
 
-[[dependencies.minihudextra]]
+[[dependencies.${mod_id}]]
 modId = "forged_networking"
 type = "required"
 versionRange = ""
 ordering = "AFTER"
 side = "CLIENT"
 
-[[dependencies.minihudextra]]
+[[dependencies.${mod_id}]]
 modId = "ftbultimine"
 type = "optional"
 versionRange = ""
 ordering = "AFTER"
 side = "CLIENT"
 
-[[dependencies.minihudextra]]
+[[dependencies.${mod_id}]]
 modId = "sereneseasons"
 type = "optional"
 versionRange = ""
 ordering = "AFTER"
 side = "CLIENT"
 
-[[dependencies.minihudextra]]
+[[dependencies.${mod_id}]]
 modId = "glitchcore"
 type = "optional"
 versionRange = ""
 ordering = "AFTER"
 side = "CLIENT"
 
-[[dependencies.minihudextra]]
+[[dependencies.${mod_id}]]
 modId = "naturesaura"
 type = "optional"
 versionRange = ""
