@@ -18,7 +18,7 @@ public class UltimineMiniHUDHandler {
             return;
         }
 
-        boolean ultimineActive = FTBUltimineClient.keyBindUltimine.isDown();
+        boolean ultimineActive = FTBUltimineClient.keyBindUltimine.isPressed();
 
         if (ultimineActive) {
             disableMiniHudIfNeeded();
