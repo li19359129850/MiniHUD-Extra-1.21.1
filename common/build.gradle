@@ -6,22 +6,34 @@ loom {
     accessWidenerPath = file("src/main/resources/minihudextra.accesswidener")
 }
 
+def platforms = (project.findProperty("enabled_platforms") ?: "fabric").split(",") as List<String>
+def isNeoForgeOnly = platforms.contains("neoforge") && !platforms.contains("fabric")
+
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modApi "dev.architectury:architectury:${architectury_version}"
 
-    modApi 'maven.modrinth:malilib:0.21.10' // fabric-1.21.1-0.21.10
-    modApi 'maven.modrinth:minihud:0.32.60' // fabric-1.21.1-0.32.60
-    modCompileOnly 'curse.maven:ftb-library-fabric-438495:8226922' // fabric-2101.1.32
-    modCompileOnly 'curse.maven:ftb-ultimine-fabric-448231:8231401' // fabric-2101.1.15
-    modApi 'maven.modrinth:modmenu:11.0.4'
-    modCompileOnly 'curse.maven:glitchcore-955399:7720796' // Fabric 1.21.1-2.1.0.2
-    modCompileOnly 'curse.maven:serene-seasons-291874:6682334' //  Fabric 1.21.1-10.1.0.3
-
-    // glitchcore
-    runtimeOnly("com.electronwill.night-config:toml:3.6.7")
-    runtimeOnly("com.electronwill.night-config:core:3.6.7")
-    runtimeOnly("net.jodah:typetools:0.6.3")
+    if (isNeoForgeOnly) {
+        // NeoForge / BoccHUD 环境：不要加载 Fabric MiniHUD / MaLiLib
+        modApi 'maven.modrinth:mafglib:0.4.3+mc1.21.1' // neoforge-0.4.3+mc1.21.1
+        modApi 'maven.modrinth:bocchud:0.4.1+mc1.21.1' // neoforge-0.4.1+mc1.21.1
+        modCompileOnly 'curse.maven:ftb-library-forge-404465:8226923' // neoforge-2101.1.32
+        modCompileOnly 'curse.maven:ftb-ultimine-forge-386134:8231400' // neoforge-2101.1.15
+        modCompileOnly 'curse.maven:glitchcore-955399:8109792' // NeoForge 1.21.1-2.1.0.2
+        modCompileOnly 'curse.maven:serene-seasons-291874:6182596' // NeoForge 1.21.1-10.1.0.3
+    } else {
+        // Fabric / MiniHUD 环境
+        modApi 'maven.modrinth:malilib:0.21.10' // fabric-1.21.1-0.21.10
+        modApi 'maven.modrinth:minihud:0.32.60' // fabric-1.21.1-0.32.60
+        modCompileOnly 'curse.maven:ftb-library-fabric-438495:8226922' // fabric-2101.1.32
+        modCompileOnly 'curse.maven:ftb-ultimine-fabric-448231:8231401' // fabric-2101.1.15
+        modApi 'maven.modrinth:modmenu:11.0.4'
+        modCompileOnly 'curse.maven:glitchcore-955399:8109791' // Fabric 1.21.1-2.1.0.2
+        modCompileOnly 'curse.maven:serene-seasons-291874:6182595' //  Fabric 1.21.1-10.1.0.3
+    }
+    runtimeOnly "com.electronwill.night-config:toml:3.6.7"
+    runtimeOnly "com.electronwill.night-config:core:3.6.7"
+    runtimeOnly "net.jodah:typetools:0.6.3"
 }
 
 publishing {
