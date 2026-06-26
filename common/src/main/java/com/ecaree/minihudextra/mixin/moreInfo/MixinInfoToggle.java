@@ -18,14 +18,14 @@ import java.util.Arrays;
 import java.util.List;
 
 @Mixin(value = InfoToggle.class, remap = false)
-public class MixinInfoToggle {
+public abstract class MixinInfoToggle {
     @Shadow
     @Final
     @Mutable
     private static InfoToggle[] $VALUES;
 
     @Invoker("<init>")
-    private static InfoToggle minihudextra$invokeInit(
+    private static InfoToggle minihudextra$newInfoToggle(
             String enumName,
             int enumOrdinal,
             String name,
@@ -50,15 +50,15 @@ public class MixinInfoToggle {
                     shift = At.Shift.AFTER
             )
     )
-    private static void addCustomInfo(CallbackInfo ci) {
+    private static void minihudextra$addCustomInfo(CallbackInfo ci) {
         List<InfoToggle> infos = new ArrayList<>(Arrays.asList($VALUES));
-        InfoToggle last = infos.get(infos.size() - 1);
 
-        int i = 1;
+        int ordinal = infos.get(infos.size() - 1).ordinal() + 1;
+
         for (MHExInfoToggle info : MHExInfoToggle.values()) {
-            infos.add(minihudextra$invokeInit(
+            infos.add(minihudextra$newInfoToggle(
                     info.name(),
-                    last.ordinal() + i,
+                    ordinal++,
                     info.getName(),
                     null,
                     info.getDefaultBooleanValue(),
@@ -68,9 +68,8 @@ public class MixinInfoToggle {
                     info.getComment(),
                     KeybindSettings.DEFAULT,
                     info.getName(),
-                    info.getName()
+                    info.getPrettyName()
             ));
-            i++;
         }
 
         $VALUES = infos.toArray(new InfoToggle[0]);
