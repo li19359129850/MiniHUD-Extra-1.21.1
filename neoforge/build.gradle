@@ -26,8 +26,8 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
 
-    modApi 'maven.modrinth:mafglib:0.4.3+mc1.21.1'
-    modApi 'maven.modrinth:bocchud:0.4.1+mc1.21.1'
+    modApi 'maven.modrinth:mafglib:0.4.3+mc1.21.1' // neoforge-0.4.3+mc1.21.1
+    modApi 'maven.modrinth:bocchud:0.4.1+mc1.21.1' // neoforge-0.4.1+mc1.21.1
     modCompileOnly 'curse.maven:ftb-library-forge-404465:8226923' // neoforge-2101.1.32
     modCompileOnly 'curse.maven:ftb-ultimine-forge-386134:8231400' // neoforge-2101.1.15
     modImplementation files("libs/ForgedNetworking-0.1.1+mc1.21.1.jar")
