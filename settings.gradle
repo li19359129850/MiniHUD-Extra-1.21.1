@@ -8,8 +8,18 @@ pluginManagement {
     }
 }
 
-include("common")
-include("fabric")
-include("neoforge")
-
 rootProject.name = "MiniHUD-Extra"
+
+def targetPlatform = startParameter.projectProperties.get("targetPlatform") ?: "fabric"
+
+include("common")
+
+if (targetPlatform == "fabric") {
+    include("fabric")
+} else if (targetPlatform == "neoforge") {
+    include("neoforge")
+} else if (targetPlatform == "common") {
+    // only common
+} else {
+    throw new GradleException("Unknown targetPlatform: ${targetPlatform}. Use common, fabric, or neoforge.")
+}
