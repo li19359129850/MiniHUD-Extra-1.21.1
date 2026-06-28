@@ -30,11 +30,11 @@ public class MixinRenderHandler {
             method = "onRenderGameOverlayPost",
             at = @At(
                     value = "INVOKE",
-                    target = "Lfi/dy/masa/malilib/render/RenderUtils;renderText(IIDIILfi/dy/masa/malilib/config/HudAlignment;ZZZLjava/util/List;Lnet/minecraft/client/gui/DrawContext;)I"
+                    target = "Lfi/dy/masa/malilib/render/RenderUtils;renderText(IIDIILfi/dy/masa/malilib/config/HudAlignment;ZZLjava/util/List;Lnet/minecraft/client/gui/DrawContext;)I"
             )
     )
-    private int onRenderText(int xOff, int yOff, double scale, int textColor, int bgColor, HudAlignment alignment, boolean useBackground, boolean useShadow, boolean useStatusShift, List<String> lines, DrawContext drawContext) {
-        if (!Configs.Generic.MODIFY_COLORS.getBooleanValue() && !Configs.Generic.TEXT_OUTLINE.getBooleanValue()) {return RenderUtils.renderText(xOff, yOff, scale, textColor, bgColor, alignment, useBackground, useShadow, useStatusShift, lines, drawContext);}
+    private int onRenderText(int xOff, int yOff, double scale, int textColor, int bgColor, HudAlignment alignment, boolean useBackground, boolean useShadow, List<String> lines, DrawContext drawContext) {
+        if (!Configs.Generic.MODIFY_COLORS.getBooleanValue() && !Configs.Generic.TEXT_OUTLINE.getBooleanValue()) {return RenderUtils.renderText(xOff, yOff, scale, textColor, bgColor, alignment, useBackground, useShadow, lines, drawContext);}
         TextRenderer fontRenderer = MinecraftClient.getInstance().textRenderer;
         final int scaledWidth = GuiUtils.getScaledWindowWidth();
         final int lineHeight = fontRenderer.fontHeight + 2;

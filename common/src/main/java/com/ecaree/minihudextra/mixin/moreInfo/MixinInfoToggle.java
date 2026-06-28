@@ -3,7 +3,6 @@ package com.ecaree.minihudextra.mixin.moreInfo;
 import com.ecaree.minihudextra.config.MHExInfoToggle;
 import fi.dy.masa.malilib.hotkeys.KeybindSettings;
 import fi.dy.masa.minihud.config.InfoToggle;
-import fi.dy.masa.minihud.info.InfoLineType;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -29,7 +28,6 @@ public abstract class MixinInfoToggle {
             String enumName,
             int enumOrdinal,
             String name,
-            InfoLineType type,
             boolean defaultValue,
             boolean serverDataRequired,
             int linePosition,
@@ -52,7 +50,6 @@ public abstract class MixinInfoToggle {
     )
     private static void minihudextra$addCustomInfo(CallbackInfo ci) {
         List<InfoToggle> infos = new ArrayList<>(Arrays.asList($VALUES));
-        InfoToggle last = infos.get(infos.size() - 1);
 
         int ordinal = infos.get(infos.size() - 1).ordinal() + 1;
 
@@ -61,7 +58,6 @@ public abstract class MixinInfoToggle {
                     info.name(),
                     ordinal++,
                     info.getName(),
-                    null,
                     info.getDefaultBooleanValue(),
                     false,
                     info.getLinePosition(),
@@ -71,7 +67,6 @@ public abstract class MixinInfoToggle {
                     info.getName(),
                     info.getPrettyName()
             ));
-            i++;
         }
 
         $VALUES = infos.toArray(new InfoToggle[0]);

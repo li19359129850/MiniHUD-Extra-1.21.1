@@ -1,6 +1,6 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.14-SNAPSHOT" apply false
+    id "dev.architectury.loom" version "1.10-SNAPSHOT" apply false
     id "com.github.johnrengelman.shadow" version "8.1.1" apply false
 }
 
@@ -61,7 +61,7 @@ allprojects {
                 neoforge_version: neoforge_version, neoforge_version_range: neoforge_version_range,
                 neoforge_loader_version_range: neoforge_loader_version_range,
                 architectury_dependency: architectury_dependency, minihud_dependency: minihud_dependency,
-                bocchud_dependency: bocchud_dependency
+                malilib_dependency: malilib_dependency, bocchud_dependency: bocchud_dependency, mafglib_dependency: mafglib_dependency
         ]
         inputs.properties replaceProperties
 

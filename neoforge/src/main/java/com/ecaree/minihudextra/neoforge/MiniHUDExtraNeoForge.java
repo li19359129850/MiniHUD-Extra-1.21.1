@@ -1,26 +1,23 @@
 package com.ecaree.minihudextra.neoforge;
 
-import com.ecaree.minihudextra.InitHandler;
 import com.ecaree.minihudextra.MiniHUDExtra;
 import com.ecaree.minihudextra.config.GuiConfigs;
-import fi.dy.masa.malilib.event.InitializationHandler;
-import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import org.thinkingstudio.mafglib.util.ForgePlatformUtils;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
-@Mod(value = MiniHUDExtra.MOD_ID, dist = Dist.CLIENT)
+@Mod(MiniHUDExtra.MOD_ID)
 public class MiniHUDExtraNeoForge {
-    public MiniHUDExtraNeoForge(IEventBus modEventBus) {
-        modEventBus.addListener(this::onInitializeClient);
+    public MiniHUDExtraNeoForge(ModContainer modContainer) {
         MiniHUDExtra.init();
-    }
 
-    public void onInitializeClient(FMLClientSetupEvent event) {
-        ForgePlatformUtils.getInstance().registerModConfigScreen(MiniHUDExtra.MOD_ID, screen -> {
-            GuiConfigs gui = new GuiConfigs();
-            gui.setParent(screen);
-            return gui;
-        });
+        modContainer.registerExtensionPoint(
+                IConfigScreenFactory.class,
+                (minecraft, screen) -> {
+                    GuiConfigs gui = new GuiConfigs();
+                    gui.setParent(screen);
+                    return gui;
+                }
+        );
     }
 }

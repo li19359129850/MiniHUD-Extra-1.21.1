@@ -14,7 +14,6 @@ logoFile="icon.png"
 
 [[mixins]]
 config="minihudextra-common.mixins.json"
-config="minihudextra.neoforge.mixins.json"
 
 [[dependencies.${mod_id}]]
 modId="neoforge"
@@ -40,21 +39,14 @@ side="CLIENT"
 [[dependencies.${mod_id}]]
 modId="bocchud"
 type="required"
-versionRange="[${bocchud_dependency},)"
+versionRange="[0.4.0,)"
 ordering="NONE"
 side="CLIENT"
 
 [[dependencies.${mod_id}]]
 modId = "mafglib"
 type = "required"
-versionRange = "[${mafglib_dependency},)"
-ordering = "AFTER"
-side = "CLIENT"
-
-[[dependencies.${mod_id}]]
-modId = "forged_networking"
-type = "required"
-versionRange = ""
+versionRange = "[0.4.2,)"
 ordering = "AFTER"
 side = "CLIENT"
 
