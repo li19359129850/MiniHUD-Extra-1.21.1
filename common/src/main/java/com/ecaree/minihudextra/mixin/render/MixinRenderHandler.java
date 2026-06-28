@@ -131,7 +131,7 @@ public class MixinRenderHandler {
                     posX = (scaledWidth / scale) - width - xOff - bgMargin;
                     break;
                 case CENTER:
-                    posX = (scaledWidth / scale / 2) - (width / 2) - xOff;
+                    posX = (scaledWidth / scale / 2.0) - (width / 2.0) - xOff;
                     break;
                 default:
             }
@@ -177,7 +177,7 @@ public class MixinRenderHandler {
             int r = (int)((double) Argb.getRed(color) * brightness);
             int g = (int)((double) Argb.getGreen(color) * brightness);
             int b = (int)((double) Argb.getBlue(color) * brightness);
-            return Argb.getArgb(0, r, g, b);
+            return Argb.getArgb(255, r, g, b);
         }
     }
 }

@@ -4,10 +4,10 @@
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "client": [
-  ],
-  "mixins": [
+    "moreInfo.MixinInfoToggle",
     "moreInfo.MixinRenderHandler"
   ],
+  "mixins": [],
   "injectors": {
     "defaultRequire": 1
   }

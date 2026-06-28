@@ -54,6 +54,10 @@ public abstract class MixinInfoToggle {
         int ordinal = infos.get(infos.size() - 1).ordinal() + 1;
 
         for (MHExInfoToggle info : MHExInfoToggle.values()) {
+            if (info == MHExInfoToggle.WEATHER) {
+                continue;
+            }
+
             infos.add(minihudextra$newInfoToggle(
                     info.name(),
                     ordinal++,

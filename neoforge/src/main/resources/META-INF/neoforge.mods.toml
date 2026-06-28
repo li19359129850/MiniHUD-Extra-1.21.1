@@ -53,27 +53,27 @@ side = "CLIENT"
 [[dependencies.${mod_id}]]
 modId = "ftbultimine"
 type = "optional"
-versionRange = ""
+versionRange = "[0,)"
 ordering = "AFTER"
 side = "CLIENT"
 
 [[dependencies.${mod_id}]]
 modId = "sereneseasons"
 type = "optional"
-versionRange = ""
+versionRange = "[0,)"
 ordering = "AFTER"
 side = "CLIENT"
 
 [[dependencies.${mod_id}]]
 modId = "glitchcore"
 type = "optional"
-versionRange = ""
+versionRange = "[0,)"
 ordering = "AFTER"
 side = "CLIENT"
 
 [[dependencies.${mod_id}]]
 modId = "naturesaura"
 type = "optional"
-versionRange = ""
+versionRange = "[0,)"
 ordering = "AFTER"
 side = "CLIENT"
