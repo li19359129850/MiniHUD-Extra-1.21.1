@@ -63,7 +63,87 @@ public class MixinRenderHandler {
         double posY = yOff + bgMargin;
 
         posY = RenderUtils.getHudPosY((int) posY, yOff, contentHeight, scale, alignment);
-        posY += RenderUtils.getHudOffsetForPotions(alignment, scale, MinecraftClient.getInstance().player);
+
+        if (useStatusShift && MinecraftClient.getInstance().player != null) {
+            posY += RenderUtils.getHudOffsetForPotions(
+                    alignment,
+                    scale,
+                    MinecraftClient.getInstance().player
+            );
+        }
+
+        int[] colorValues = minihudextra$getLineColors();
+
+        for (int i = 0; i < lines.size(); i++) {
+            String line = lines.get(i);
+
+            int lineColor = textColor;
+
+            if (Configs.Generic.MODIFY_COLORS.getBooleanValue() && i < colorValues.length) {
+                lineColor = colorValues[i];
+            }
+
+            final int width = fontRenderer.getWidth(line);
+
+            switch (alignment) {
+                case TOP_RIGHT:
+                case BOTTOM_RIGHT:
+                    posX = (scaledWidth / scale) - width - xOff - bgMargin;
+                    break;
+                case CENTER:
+                    posX = (scaledWidth / scale / 2.0) - (width / 2.0) - xOff;
+                    break;
+                default:
+                    break;
+            }
+
+            final int x = (int) posX;
+            final int y = (int) posY;
+
+            posY += lineHeight;
+
+            if (useBackground) {
+                RenderUtils.drawRect(
+                        x - bgMargin,
+                        y - bgMargin,
+                        width + bgMargin,
+                        bgMargin + fontRenderer.fontHeight,
+                        bgColor
+                );
+            }
+
+            if (Configs.Generic.TEXT_OUTLINE.getBooleanValue()) {
+                OrderedText orderedText = Text.literal(line).asOrderedText();
+
+                int outlineColor = Configs.Generic.AUTO_OUTLINE_COLOR.getBooleanValue()
+                        ? minihudextra$autoOutlineColor(lineColor)
+                        : Configs.Colors.OUTLINE_COLOR.getIntegerValue();
+
+                fontRenderer.drawWithOutline(
+                        orderedText,
+                        x,
+                        y,
+                        lineColor,
+                        outlineColor,
+                        drawContext.getMatrices().peek().getPositionMatrix(),
+                        drawContext.getVertexConsumers(),
+                        15728880
+                );
+
+                /*
+                 * drawWithOutline 使用 DrawContext 的 vertex consumers。
+                 * 这里必须 flush，否则开启描边时更容易出现整行背景/文字状态滞留。
+                 */
+                drawContext.getVertexConsumers().draw();
+            } else {
+                drawContext.drawText(fontRenderer, line, x, y, lineColor, useShadow);
+            }
+        }
+
+        if (scaled) {
+            globalStack.popMatrix();
+            RenderSystem.applyModelViewMatrix();
+        }
 
         int[] colorValues = new int[] {
                 Configs.Colors.LINE_ONE.getIntegerValue(),

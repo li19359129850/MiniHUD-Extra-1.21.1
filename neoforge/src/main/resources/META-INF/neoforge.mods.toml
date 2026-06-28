@@ -15,6 +15,9 @@ logoFile="icon.png"
 [[mixins]]
 config="minihudextra-common.mixins.json"
 
+[[mixins]]
+config="minihudextra.neoforge.mixins.json"
+
 [[dependencies.${mod_id}]]
 modId="neoforge"
 type="required"
