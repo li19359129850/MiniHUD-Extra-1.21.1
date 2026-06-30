@@ -1,5 +1,7 @@
 package com.ecaree.minihudextra.util;
 
+import com.ecaree.minihudextra.config.Configs;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.function.BooleanSupplier;
@@ -18,11 +20,19 @@ public final class UltimineMiniHUDHandler {
     private UltimineMiniHUDHandler() {
     }
 
+    /**
+     * Architectury ClientTickEvent entry.
+     *
+     * FTB_ULTIMINE_SUPPORT = true:
+     *   Ultimine 激活时临时关闭 MiniHUD/BoccHUD 主显示，松开后恢复。
+     *
+     * FTB_ULTIMINE_SUPPORT = false:
+     *   不关闭 MiniHUD/BoccHUD。
+     *   但是 render mixin 会在 Ultimine 激活期间绕过 MiniHUD Extra 自定义颜色/描边渲染，
+     *   避免 MiniHUD Extra 的背景/描边绘制造成 FTB HUD 下的残留背景阴影。
+     */
     public static void clientTick(Object client) {
-        if (!isFeatureEnabled()
-                || client == null
-                || !hasPlayer(client)
-                || !isFtbUltimineDown()) {
+        if (!isFeatureEnabled() || client == null || !hasPlayer(client) || !isFtbUltimineDown()) {
             restoreHudIfNeeded();
             return;
         }
@@ -30,8 +40,60 @@ public final class UltimineMiniHUDHandler {
         disableHudIfNeeded();
     }
 
+    /**
+     * 给 MiniHUD Extra 渲染 mixin 使用。
+     *
+     * 注意：
+     * 这里不是“隐藏 BoccHUD”。
+     * 这里只表示：
+     *   FTB 支持配置关闭时，如果 Ultimine 正在按住，
+     *   暂时不要走 MiniHUD Extra 自己的颜色/描边/背景绘制路径，
+     *   而是回退到 BoccHUD/MaLiLib 原版 renderText。
+     */
+    public static boolean shouldBypassMiniHUDExtraRenderStyleForUltimine() {
+        if (isFeatureEnabled()) {
+            return false;
+        }
+
+        try {
+            return isFtbUltimineDown();
+        } catch (Throwable ignored) {
+            return false;
+        }
+    }
+
+    /**
+     * 调试/兼容用，只返回 Ultimine 按键状态。
+     */
+    public static boolean isUltimineDownForDebugOrCompat() {
+        try {
+            return isFtbUltimineDown();
+        } catch (Throwable ignored) {
+            return false;
+        }
+    }
+
     private static boolean isFeatureEnabled() {
-        return com.ecaree.minihudextra.config.Configs.Generic.FTB_ULTIMINE_SUPPORT.getBooleanValue();
+        return Configs.Generic.FTB_ULTIMINE_SUPPORT.getBooleanValue();
+    }
+
+    public static boolean shouldDisableTextBackgroundForUltimine() {
+        /*
+         * FTB_ULTIMINE_SUPPORT = true：
+         *   仍然走原来的“自动隐藏 BoccHUD/MiniHUD”逻辑。
+         *
+         * FTB_ULTIMINE_SUPPORT = false：
+         *   不隐藏 BoccHUD，只在 Ultimine HUD 激活期间关闭 BoccHUD 文本背景。
+         */
+        if (isFeatureEnabled()) {
+            return false;
+        }
+
+        try {
+            return isFtbUltimineDown();
+        } catch (Throwable ignored) {
+            return false;
+        }
     }
 
     private static boolean hasPlayer(Object client) {
@@ -39,6 +101,10 @@ public final class UltimineMiniHUDHandler {
             Field playerField = client.getClass().getField("player");
             return playerField.get(client) != null;
         } catch (Throwable ignored) {
+            /*
+             * 不同映射/平台下字段可能不同。
+             * 这里失败时不要直接禁用功能，避免 Fabric/NeoForge 环境差异导致误判。
+             */
             return true;
         }
     }
@@ -55,16 +121,26 @@ public final class UltimineMiniHUDHandler {
         ftbResolved = true;
 
         try {
-            Class<?> clientClass = Class.forName(
+            Class<?> clientClass = findClass(
                     "dev.ftb.mods.ftbultimine.client.FTBUltimineClient",
-                    false,
-                    UltimineMiniHUDHandler.class.getClassLoader()
+                    "dev.ftb.mods.ftbultimine.FTBUltimineClient"
             );
 
-            Field keyField = findField(clientClass, "keyBindUltimine", "keyMappingUltimine", "ultimineKey");
+            Field keyField = findField(
+                    clientClass,
+                    "keyBindUltimine",
+                    "keyMappingUltimine",
+                    "ultimineKey",
+                    "key"
+            );
+
             Object keyBind = keyField.get(null);
 
-            Method pressedMethod = findBooleanMethod(keyBind.getClass(), "isDown", "isPressed");
+            Method pressedMethod = findBooleanMethod(
+                    keyBind.getClass(),
+                    "isDown",
+                    "isPressed"
+            );
 
             isUltimineDown = () -> {
                 try {
@@ -141,6 +217,19 @@ public final class UltimineMiniHUDHandler {
             setBooleanValueMethod = null;
             return false;
         }
+    }
+
+    private static Class<?> findClass(String... names) throws ClassNotFoundException {
+        ClassLoader loader = UltimineMiniHUDHandler.class.getClassLoader();
+
+        for (String name : names) {
+            try {
+                return Class.forName(name, false, loader);
+            } catch (ClassNotFoundException ignored) {
+            }
+        }
+
+        throw new ClassNotFoundException(String.join("/", names));
     }
 
     private static Field findField(Class<?> type, String... names) throws NoSuchFieldException {
